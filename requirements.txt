@@ -11,3 +11,4 @@ azure-core
 azure-search==1.0.0b2
 azure-search-documents==11.5.2
 aiohttp
+azure-identity
