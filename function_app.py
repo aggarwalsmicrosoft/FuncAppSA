@@ -10,7 +10,6 @@ import json
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
-
 # Load environment variables
 search_endpoint = os.environ["AZURE_SEARCH_SERVICE_ENDPOINT"]
 
