@@ -51,7 +51,7 @@ async def extract_titles(query: str) -> list:
         ]
     )
     # Extract titles from OpenAI response
-    titles = response.choices[0].message.get.content.split(", ")
+    titles = response.choices[0].message.content.split(", ")
     return titles
 
 
