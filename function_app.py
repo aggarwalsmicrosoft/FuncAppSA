@@ -10,6 +10,7 @@ import json
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
+
 # Load environment variables
 search_endpoint = os.environ["AZURE_SEARCH_SERVICE_ENDPOINT"]
 
@@ -50,7 +51,7 @@ async def extract_titles(query: str) -> list:
         ]
     )
     # Extract titles from OpenAI response
-    titles = response.choices[0].message.get("content", "").split(", ")
+    titles = response.choices[0].message.get.content.split(", ")
     return titles
 
 
@@ -97,7 +98,7 @@ async def handle_query_handler(req: func.HttpRequest) -> func.HttpResponse:
                 {"role": "user", "content": f"Answer this query: '{query}' using the following documents:\n{formatted_results}"}
             ]
         )
-        openai_answer = response.choices[0].message.get("content", "No answer generated.")
+        openai_answer = response.choices[0].message.content
         # Response object with the OpenAI answer and retrieved content
         response_data = {
             "openai_answer": openai_answer,
