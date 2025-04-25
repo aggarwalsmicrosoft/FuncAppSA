@@ -50,8 +50,16 @@ async def extract_titles(query: str) -> list:
             {"role": "user", "content": f"Extract the titles from this query: {query}"}
         ]
     )
-    # Extract titles from OpenAI response
-    titles = response.choices[0].message.content.split(", ")
+    ## Extract titles from OpenAI response
+    
+    raw_titles = response.choices[0].message.content
+
+    # Remove the square brackets and split by comma
+    titles = raw_titles.strip("[]").split(", ")
+
+    # Remove any surrounding quotes from each title
+    titles = [title.strip("'\"") for title in titles]
+
     return titles
 
 
@@ -80,10 +88,12 @@ async def handle_query_handler(req: func.HttpRequest) -> func.HttpResponse:
             return func.HttpResponse("No query provided.", status_code=400)
         # Extract titles using OpenAI
         titles = await extract_titles(query)
+        logging.info(f"Generated titles: {titles}")
         # Search content by titles if any are extracted
         formatted_results = ""
         if titles:
             filter_query = " or ".join([f"title eq '{title}'" for title in titles])
+            logging.info(f"Generated filter query: {filter_query}")  # Debug log for filter query
             results = await search_client.search(filter=filter_query, select=["title", "content"])
             formatted_results = "\n".join(
                 [f"Title: {result['title']}\nContent: {result['content']}" async for result in results]
