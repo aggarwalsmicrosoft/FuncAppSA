@@ -8,7 +8,7 @@ from azure.search.documents.aio import SearchClient
 from openai import AsyncAzureOpenAI, AzureOpenAI, OpenAI
 import json
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 
 # Load environment variables
